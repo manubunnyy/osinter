@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+#define MAX_PROCESSES 100
+
+typedef struct {
+    int id;
+    int memory;
+} Process;
+
+void proportionalAllocation(int totalMemorySize, int numberOfProcesses, Process processes[]) {
+    int totalMemoryRequirements = 0;
+
+    for (int i = 0; i < numberOfProcesses; i++) {
+        totalMemoryRequirements += processes[i].memory;
+    }
+    printf("Memory Allocation Table:\n");
+    for (int i = 0; i < numberOfProcesses; i++) {
+        float allocation = (float)(processes[i].memory * totalMemorySize) / totalMemoryRequirements;
+        printf("Process %d: Memory allocated = %.2f KB\n", processes[i].id, allocation);
+    }
+}
+
+int main() {
+    int totalMemorySize = 1024; // Total memory size in KB
+    int numberOfProcesses = 3;
+    Process processes[MAX_PROCESSES] = {
+        {1, 0}, // Process IDs start from 1
+        {2, 0},
+        {3, 0}
+    };
+
+    // Input memory requirements for each process
+    for (int i = 0; i < numberOfProcesses; i++) {
+        printf("Enter memory requirement for Process %d (in KB): ", i + 1);
+        scanf("%d", &processes[i].memory);
+    }
+    proportionalAllocation(totalMemorySize, numberOfProcesses, processes);
+    return 0;
+}
